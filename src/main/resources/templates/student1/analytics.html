@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layouts/main :: layout(~{::title}, ~{::main-content})}">
+<head><title>Maintenance Cost Analytics – Student 1</title></head>
+<body>
+<th:block th:fragment="main-content">
+
+    <div class="mb-6 flex items-start justify-between">
+        <div>
+            <p class="text-sm text-slate-400 mb-1">Student 1 · Analytics Report</p>
+            <h1 class="text-2xl font-bold text-slate-800">Maintenance Cost Analysis per Station</h1>
+            <p class="text-slate-500 mt-1 text-sm">
+                Total and average maintenance costs grouped by vehicle and home station.
+                Only logs with <code class="bg-slate-100 px-1 rounded font-mono text-xs">service_cost &gt; 0</code> are included.
+            </p>
+        </div>
+        <a th:href="@{/student1/usecase}"
+           class="shrink-0 ml-4 bg-primary text-white text-sm font-medium px-4 py-2 rounded-lg hover:bg-primary-dark transition-colors">
+            + Add Log
+        </a>
+    </div>
+
+    <!-- Table -->
+    <div class="bg-white rounded-2xl shadow overflow-hidden">
+        <table class="w-full text-sm">
+            <thead class="bg-slate-50 border-b border-slate-200">
+            <tr>
+                <th class="th">Station</th>
+                <th class="th">VIN</th>
+                <th class="th">Model</th>
+                <th class="th text-center">Logs</th>
+                <th class="th text-right">Total Cost (€)</th>
+                <th class="th text-right">Avg Cost (€)</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="row, stat : ${rows}"
+                th:classappend="${stat.odd} ? 'bg-white' : 'bg-slate-50/50'"
+                class="border-b border-slate-100 hover:bg-blue-50/40 transition-colors">
+                <td class="td font-medium" th:text="${row.stationAddress}"></td>
+                <td class="td font-mono text-xs text-slate-500" th:text="${row.vehicleVin}"></td>
+                <td class="td" th:text="${row.vehicleModel}"></td>
+                <td class="td text-center">
+                    <span class="inline-block bg-blue-100 text-blue-700 rounded-full px-2 py-0.5 text-xs font-semibold"
+                          th:text="${row.totalLogs}"></span>
+                </td>
+                <td class="td text-right font-semibold" th:text="${#numbers.formatDecimal(row.totalCost, 1, 2)}"></td>
+                <td class="td text-right text-slate-500" th:text="${#numbers.formatDecimal(row.avgCost, 1, 2)}"></td>
+            </tr>
+            <tr th:if="${#lists.isEmpty(rows)}">
+                <td colspan="6" class="text-center py-10 text-slate-400">No data yet. Add maintenance logs first.</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <p class="text-xs text-slate-400 mt-3">
+        Results change after submitting the use case (adding a damage report).
+    </p>
+
+    <style>
+        .th { @apply px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider; }
+        .td { @apply px-4 py-3 text-slate-700; }
+    </style>
+
+</th:block>
+</body>
+</html>

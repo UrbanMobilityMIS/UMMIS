@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:fragment="layout(title, content)">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title th:replace="${title}">Urban Mobility – Group 22</title>
+    <!-- Tailwind CSS CDN (fine for development/demo) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary:  { DEFAULT: '#1d4ed8', light: '#3b82f6', dark: '#1e3a8a' },
+                        accent:   '#f59e0b',
+                        surface:  '#f8fafc',
+                    },
+                    fontFamily: {
+                        sans: ['"DM Sans"', 'system-ui', 'sans-serif'],
+                        mono: ['"JetBrains Mono"', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+</head>
+<body class="bg-slate-50 font-sans text-slate-800 min-h-screen">
+
+<!-- ── Nav ─────────────────────────────────────────────── -->
+<nav class="bg-primary shadow-lg">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+        <a href="/" class="text-white font-bold text-lg tracking-tight flex items-center gap-2">
+            <span class="text-accent text-2xl">⚡</span> G22 Mobility
+        </a>
+        <div class="flex gap-1 text-sm">
+            <a th:href="@{/student1/usecase}"   class="nav-link">S1 Use Case</a>
+            <a th:href="@{/student1/analytics}" class="nav-link">S1 Analytics</a>
+            <a th:href="@{/student2/usecase}"   class="nav-link">S2 Use Case</a>
+            <a th:href="@{/student2/analytics}" class="nav-link">S2 Analytics</a>
+            <a th:href="@{/student3/usecase}"   class="nav-link">S3 Use Case</a>
+            <a th:href="@{/student3/analytics}" class="nav-link">S3 Analytics</a>
+        </div>
+    </div>
+</nav>
+
+<!-- ── Page Content ─────────────────────────────────────── -->
+<main class="max-w-6xl mx-auto px-4 py-8">
+    <th:block th:replace="${content}"/>
+</main>
+
+<style>
+    .nav-link {
+        @apply text-blue-100 hover:text-white hover:bg-blue-700 px-3 py-1.5 rounded-md transition-colors;
+    }
+</style>
+</body>
+</html>

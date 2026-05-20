@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/main :: layout(~{::title}, ~{::main-content})}">
+
+<head>
+    <title>Report Vehicle Damage – Student 1</title>
+</head>
+
+<body>
+    <th:block th:fragment="main-content">
+
+        <div class="max-w-2xl mx-auto">
+            <p class="text-xs text-slate-400">
+                Vehicles: <span th:text="${#lists.size(vehicles)}"></span>,
+                Technicians: <span th:text="${#lists.size(technicians)}"></span>
+            </p>
+            <!-- Header -->
+            <div class="mb-6">
+                <p class="text-sm text-slate-400 mb-1">Student 1 · Use Case</p>
+                <h1 class="text-2xl font-bold text-slate-800">Report Vehicle Damage</h1>
+                <p class="text-slate-500 mt-1 text-sm">
+                    Creates a new <code class="bg-slate-100 px-1 rounded font-mono text-xs">Maintenance_Log</code>
+                    record linked to a Vehicle and Technician. Demonstrates the <strong>Weak Entity</strong>
+                    relationship.
+                </p>
+            </div>
+
+            <!-- Flash messages -->
+            <div th:if="${success}"
+                class="mb-4 p-4 bg-green-50 border border-green-200 rounded-xl text-green-800 text-sm">
+                ✅ <span th:text="${success}"></span>
+                — <a th:href="@{/student1/analytics}" class="underline font-medium">View analytics to see the change
+                    →</a>
+            </div>
+            <div th:if="${error}" class="mb-4 p-4 bg-red-50 border border-red-200 rounded-xl text-red-800 text-sm">
+                ❌ <span th:text="${error}"></span>
+            </div>
+
+            <!-- Form -->
+            <div class="bg-white rounded-2xl shadow p-6">
+                <form th:action="@{/student1/usecase}" th:object="${form}" method="post" class="space-y-5">
+
+                    <!-- Vehicle -->
+                    <div>
+                        <label class="label" for="vehicleId">Vehicle</label>
+                        <select th:field="*{vehicleId}" id="vehicleId" class="input">
+                            <option value="">— Select a vehicle —</option>
+                            <option th:each="v : ${vehicles}" th:value="${v.id}"
+                                th:text="${v.id + ' · ' + v.vin + ' (' + v.modelType + ')'}">
+                            </option>
+                        </select>
+                        <p th:if="${#fields.hasErrors('vehicleId')}" th:errors="*{vehicleId}" class="err"></p>
+                    </div>
+
+                    <!-- Technician -->
+                    <div>
+                        <label class="label" for="technicianId">Technician</label>
+                        <select th:field="*{technicianId}" id="technicianId" class="input">
+                            <option value="">— Select a technician —</option>
+                            <option th:each="t : ${technicians}" th:value="${t.employeeId}"
+                                th:text="${t.employeeId + ' · ' + t.employee.name + ' (' + t.certificationLevel + ')'}">
+                            </option>
+                        </select>
+                        <p th:if="${#fields.hasErrors('technicianId')}" th:errors="*{technicianId}" class="err"></p>
+                    </div>
+
+                    <!-- Repair Date -->
+                    <div>
+                        <label class="label" for="repairDate">Repair Date</label>
+                        <input th:field="*{repairDate}" id="repairDate" type="date" class="input" />
+                        <p th:if="${#fields.hasErrors('repairDate')}" th:errors="*{repairDate}" class="err"></p>
+                    </div>
+
+                    <!-- Service Cost -->
+                    <div>
+                        <label class="label" for="serviceCost">Service Cost (€)</label>
+                        <input th:field="*{serviceCost}" id="serviceCost" type="number" step="0.01" min="0"
+                            placeholder="e.g. 150.00" class="input" />
+                        <p th:if="${#fields.hasErrors('serviceCost')}" th:errors="*{serviceCost}" class="err"></p>
+                    </div>
+
+                    <button type="submit"
+                        class="w-full bg-primary hover:bg-primary-dark text-white font-semibold py-2.5 rounded-xl transition-colors">
+                        Submit Damage Report
+                    </button>
+                </form>
+            </div>
+
+            <div class="mt-4 text-center">
+                <a th:href="@{/student1/analytics}" class="text-primary text-sm hover:underline">
+                    View Maintenance Cost Analytics →
+                </a>
+            </div>
+        </div>
+
+        <style>
+            .label {
+                @apply block text-sm font-medium text-slate-700 mb-1;
+            }
+
+            .input {
+                @apply w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition;
+            }
+
+            .err {
+                @apply text-red-500 text-xs mt-1;
+            }
+        </style>
+
+    </th:block>
+</body>
+
+</html>
