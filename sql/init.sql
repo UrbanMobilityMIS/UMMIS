@@ -19,6 +19,7 @@ CREATE TABLE IF NOT EXISTS vehicle (
     battery_level INT CHECK (battery_level BETWEEN 0 AND 100),
     model_type    VARCHAR(50),
     station_id    INT NOT NULL,
+    available BOOLEAN DEFAULT TRUE,
     FOREIGN KEY (station_id) REFERENCES station(id) ON DELETE CASCADE
 );
 

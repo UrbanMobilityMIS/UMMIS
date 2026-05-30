@@ -28,4 +28,7 @@ public class Vehicle {
 
     @OneToMany(mappedBy = "vehicle")
     private List<MaintenanceLog> maintenanceLogs;
+    
+    @Column(name = "available")
+    private boolean available = true;
 }

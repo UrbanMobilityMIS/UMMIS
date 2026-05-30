@@ -1,15 +1,122 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       th:replace="~{layouts/main :: layout(~{::title}, ~{::main-content})}">
-<head><title>Placeholder</title></head>
+
+<head>
+    <title>Rent Vehicle</title>
+</head>
+
 <body>
+
 <th:block th:fragment="main-content">
-    <div class="max-w-xl mx-auto text-center py-20">
-        <div class="text-5xl mb-4">🚧</div>
-        <h1 class="text-2xl font-bold mb-2">Coming Soon</h1>
-        <p class="text-slate-400 text-sm">This section is a placeholder. Implement following the Student 1 pattern.</p>
-        <a href="/" class="mt-6 inline-block text-primary text-sm hover:underline">← Back to Home</a>
+
+    <div class="max-w-5xl mx-auto py-16 px-6">
+
+        <!-- Page Header -->
+        <div class="mb-10">
+            <h1 class="text-5xl font-bold text-primary mb-3">
+                Rent a Vehicle
+            </h1>
+
+            <p class="text-slate-500 text-lg">
+                Select a user and vehicle to create a rental.
+            </p>
+        </div>
+
+        <!-- Main Card -->
+        <div class="bg-white rounded-3xl shadow-md border border-slate-200 p-10">
+
+            <form
+                    th:action="@{/student2/rent}"
+                    method="post"
+                    class="space-y-8"
+            >
+
+                <!-- User Selection -->
+            <label class="block text-2xl font-semibold text-dark mb-4">
+                    User
+                </label>
+
+                <select
+                        name="userId"
+                        required
+                        class="w-full border border-gray-300 rounded-2xl px-6 py-5 text-xl focus:outline-none focus:ring-2 focus:ring-primary"
+                >
+                    <option value="" disabled selected>
+                        Select your account / email
+                    </option>
+
+                    <option
+                            th:each="user : ${users}"
+                            th:value="${user.id}"
+                            th:text="${user.emailAddress}"
+                    ></option>
+                </select>
+
+                <!-- Vehicle Selection -->
+                <label class="block text-2xl font-semibold text-dark mb-4 mt-10">
+                    Vehicle
+                </label>
+
+                    <select
+                            name="vehicleId"
+                            required
+                            class="w-full border border-gray-300 rounded-2xl px-6 py-5 text-xl focus:outline-none focus:ring-2 focus:ring-primary"
+                    >
+                        <option value="" disabled selected>
+                            Select one of the vehicles
+                        </option>
+
+                        <option
+                                th:each="vehicle : ${vehicles}"
+                                th:value="${vehicle.id}"
+                                th:text="${vehicle.modelType + ' - ' + vehicle.vin}"
+                        ></option>
+                    </select>
+
+                <!-- Submit Button -->
+                <div class="pt-4">
+
+              <div th:if="${#lists.isEmpty(vehicles)}"
+                  class="text-red-500 font-semibold mb-4">
+
+                  All vehicles are currently rented.
+
+              </div>
+              <div th:if="${message}" class="mb-6">
+                 <p
+                  class="text-lg font-semibold"
+                  th:text="${message}"
+                  th:classappend="${message.contains('successfully')}
+                  ? 'text-green-600'
+                : 'text-red-500'"
+                 ></p>
+              </div>
+
+             <button
+             type="submit"
+             th:disabled="${#lists.isEmpty(vehicles)}"
+             class="bg-primary hover:bg-blue-700 text-white text-lg font-semibold px-8 py-3 rounded-xl shadow transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+    >
+             Rent Vehicle
+             </button>
+
+               </div>
+
+            </form>
+
+        </div>
+
     </div>
+
 </th:block>
+<div class="mt-10 text-center pb-10">
+    <a
+            th:href="@{/student2/usecase}"
+            class="text-primary text-lg font-semibold hover:underline"
+    >
+        ← Back to Home Page
+    </a>
+</div>
 </body>
 </html>
