@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layouts/main :: layout(~{::title}, ~{::main-content})}">
+
+<head>
+    <title>Student 2 Mongo Analytics</title>
+</head>
+
+<body>
+
+<th:block th:fragment="main-content">
+
+    <div class="max-w-6xl mx-auto">
+
+        <h1 class="text-4xl font-bold text-primary mb-2">
+            Student 2 Mongo Analytics
+        </h1>
+
+        <p class="text-slate-500 mb-6">
+            Analytics generated from MongoDB rental documents.
+        </p>
+
+        <!-- Summary Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+
+            <div class="bg-white rounded-xl shadow p-6">
+                <h3 class="text-sm text-gray-500">Total Mongo Rentals</h3>
+                <p class="text-3xl font-bold"
+                   th:text="${totalMongoRentals}">
+                </p>
+            </div>
+
+            <div class="bg-white rounded-xl shadow p-6">
+                <h3 class="text-sm text-gray-500">Most Active User</h3>
+                <p class="text-xl font-bold"
+                   th:text="${mostActiveMongoUser}">
+                </p>
+            </div>
+
+            <div class="bg-white rounded-xl shadow p-6">
+                <h3 class="text-sm text-gray-500">Most Rented Vehicle</h3>
+                <p class="text-xl font-bold"
+                   th:text="${mostRentedMongoVehicle}">
+                </p>
+            </div>
+
+        </div>
+
+        <!-- Rental Records -->
+        <div class="bg-white rounded-xl shadow p-6">
+
+            <h2 class="text-xl font-bold mb-4">
+                Mongo Rental Records
+            </h2>
+
+            <table class="w-full border-collapse">
+
+                <thead>
+                <tr class="border-b">
+                    <th class="text-left p-3">Rental ID</th>
+                    <th class="text-left p-3">User Email</th>
+                    <th class="text-left p-3">Vehicle</th>
+                    <th class="text-left p-3">Start Time</th>
+                </tr>
+                </thead>
+
+                <tbody>
+
+                <tr th:if="${#lists.isEmpty(mongoRentals)}">
+                    <td colspan="4"
+                        class="p-4 text-center text-gray-500">
+                        No MongoDB records found.
+                    </td>
+                </tr>
+
+                <tr th:each="r : ${mongoRentals}"
+                    class="border-b">
+
+                    <td class="p-3"
+                        th:text="${r.rentalId}">
+                    </td>
+
+                    <td class="p-3"
+                        th:text="${r.userEmail}">
+                    </td>
+
+                    <td class="p-3"
+                        th:text="${r.vehicleModel}">
+                    </td>
+
+                    <td class="p-3"
+                        th:text="${r.startTime}">
+                    </td>
+
+                </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        <div class="mt-6">
+            <a th:href="@{/}"
+               class="text-blue-600 hover:underline">
+                ← Back to Home
+            </a>
+        </div>
+
+    </div>
+
+</th:block>
+
+</body>
+</html>

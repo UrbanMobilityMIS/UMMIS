@@ -7,6 +7,8 @@ import com.group22.mobility.repository.mariadb.RentalRepository;
 import com.group22.mobility.repository.mariadb.UserRepository;
 import com.group22.mobility.repository.mariadb.VehicleRepository;
 
+import com.group22.mobility.model.mangodb.RentalDocument;
+import com.group22.mobility.repository.mariadb.mangodb.RentalMongoRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -15,22 +17,26 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+
 @Service
 public class Student2Service {
 
     private final RentalRepository rentalRepository;
     private final UserRepository userRepository;
     private final VehicleRepository vehicleRepository;
+    private final RentalMongoRepository rentalMongoRepository;
 
     public Student2Service(
-            RentalRepository rentalRepository,
-            UserRepository userRepository,
-            VehicleRepository vehicleRepository
-    ) {
-        this.rentalRepository = rentalRepository;
-        this.userRepository = userRepository;
-        this.vehicleRepository = vehicleRepository;
-    }
+        RentalRepository rentalRepository,
+        UserRepository userRepository,
+        VehicleRepository vehicleRepository,
+        RentalMongoRepository rentalMongoRepository
+) {
+    this.rentalRepository = rentalRepository;
+    this.userRepository = userRepository;
+    this.vehicleRepository = vehicleRepository;
+    this.rentalMongoRepository = rentalMongoRepository;
+}
 
     // =========================
     // RENT VEHICLE
@@ -54,6 +60,30 @@ public class Student2Service {
         rental.setStartTime(LocalDateTime.now());
 
         rentalRepository.save(rental);
+        try {
+
+                RentalDocument doc = new RentalDocument();
+
+                doc.setRentalId(rental.getId());
+                doc.setUserId(user.getId());
+                doc.setUserEmail(user.getEmailAddress());
+
+                doc.setVehicleId(vehicle.getId());
+                doc.setVehicleModel(vehicle.getModelType());
+
+                doc.setStartTime(rental.getStartTime());
+
+                rentalMongoRepository.save(doc);
+
+                System.out.println("Mongo document saved successfully");
+
+                } catch (Exception e) {
+
+                System.out.println("========== MONGO ERROR ==========");
+                e.printStackTrace();
+                System.out.println("=================================");
+
+                }
 
         // Mark unavailable
         vehicle.setAvailable(false);
