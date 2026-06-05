@@ -1,24 +1,30 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       th:replace="~{layouts/main :: layout(~{::title}, ~{::main-content})}">
-<head><title>Level 2 Technician Analytics – Student 3</title></head>
+<head><title>MongoDB Analytics – Student 3</title></head>
 <body>
 <th:block th:fragment="main-content">
 
     <div class="mb-6 flex items-start justify-between">
         <div>
-            <p class="text-sm text-slate-400 mb-1">Student 3 · Analytics Report</p>
+            <p class="text-sm text-slate-400 mb-1">Student 3 · MongoDB Analytics Report</p>
             <h1 class="text-2xl font-bold text-slate-800">Level 2 Technician Maintenance Report</h1>
             <p class="text-slate-500 mt-1 text-sm">
-                Aggregated MariaDB analytics for Level 2 technicians. The report summarizes
-                total maintenance tasks, total service cost, average service cost, and latest repair date
-                using Employee, Technician, Maintenance Log, and Vehicle data.
+                Aggregated MongoDB analytics for Level 2 technicians after migration from MariaDB.
+                The report shows the same business result using denormalized documents from the
+                <code class="bg-slate-100 px-1 rounded font-mono text-xs">student3_technician_maintenance</code>
+                collection.
             </p>
         </div>
-        <a th:href="@{/student3/usecase}"
+        <a th:href="@{/student3/mongo/usecase}"
            class="shrink-0 ml-4 bg-primary text-white text-sm font-medium px-4 py-2 rounded-lg hover:bg-primary-dark transition-colors">
-            + Onboard Technician
+            Mongo Migration
         </a>
+    </div>
+
+    <div th:if="${success}"
+         class="mb-6 rounded-xl border border-green-300 bg-green-100 text-green-800 px-4 py-3 text-sm">
+        <span th:text="${success}"></span>
     </div>
 
     <div class="bg-white rounded-2xl shadow overflow-hidden">
@@ -34,12 +40,10 @@
                 <th class="th">Last Repair Date</th>
             </tr>
             </thead>
-
             <tbody>
             <tr th:each="row, stat : ${rows}"
                 th:classappend="${stat.odd} ? 'bg-white' : 'bg-slate-50/50'"
                 class="border-b border-slate-100 hover:bg-blue-50/40 transition-colors">
-
                 <td class="td font-mono text-xs text-slate-500" th:text="${row.technicianId}"></td>
                 <td class="td font-medium" th:text="${row.technicianName}"></td>
                 <td class="td">
@@ -54,7 +58,7 @@
 
             <tr th:if="${#lists.isEmpty(rows)}">
                 <td colspan="7" class="text-center py-10 text-slate-400">
-                    No Level 2 technician maintenance data yet. Submit the Student 3 use case first.
+                    No MongoDB data yet. Run the Student 3 Mongo migration first.
                 </td>
             </tr>
             </tbody>
@@ -62,7 +66,7 @@
     </div>
 
     <p class="text-xs text-slate-400 mt-3">
-        Results change after submitting the use case: onboarding a new Level 2 technician and recording the initial maintenance task.
+        This report should match the MariaDB Student 3 analytics after migration.
     </p>
 
     <style>

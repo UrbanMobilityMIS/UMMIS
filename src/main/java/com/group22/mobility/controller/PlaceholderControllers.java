@@ -11,9 +11,9 @@ class Student2Controller {
     @GetMapping("/analytics") public String analytics() { return "student2/analytics"; }
 }
 
-@Controller
-@RequestMapping("/student3")
-class Student3Controller {
-    @GetMapping("/usecase")   public String uc()        { return "student3/usecase"; }
-    @GetMapping("/analytics") public String analytics() { return "student3/analytics"; }
-}
+// @Controller
+// @RequestMapping("/student3")
+// class Student3Controller {
+//     @GetMapping("/usecase")   public String uc()        { return "student3/usecase"; }
+//     @GetMapping("/analytics") public String analytics() { return "student3/analytics"; }
+// }

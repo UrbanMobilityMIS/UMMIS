@@ -44,12 +44,19 @@
                 <h2 class="font-bold text-lg mb-1">Student 3</h2>
                 <p class="text-slate-400 text-sm mb-1">Sharifzai, Mesbahuddin</p>
                 <p class="text-slate-500 text-sm mb-4">Onboard Technician &amp; Level 2 Maintenance Report</p>
-                <div class="flex flex-col gap-2">
-                    <a th:href="@{/student3/usecase}"
-                       class="btn-primary">→ Use Case</a>
-                    <a th:href="@{/student3/analytics}"
-                       class="btn-outline">→ Analytics</a>
-                </div>
+               <div class="flex flex-col gap-2">
+    <a th:href="@{/student3/usecase}"
+       class="btn-primary">→ RDBMS Use Case</a>
+
+    <a th:href="@{/student3/analytics}"
+       class="btn-outline">→ RDBMS Analytics</a>
+
+    <a th:href="@{/student3/mongo/usecase}"
+       class="btn-primary">→ MongoDB Migration</a>
+
+    <a th:href="@{/student3/mongo/analytics}"
+       class="btn-outline">→ MongoDB Analytics</a>
+</div>
             </div>
         </div>
     </div>
