@@ -5,7 +5,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title th:replace="${title}">Urban Mobility – Group 22</title>
-    <!-- Tailwind CSS CDN (fine for development/demo) -->
+
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -14,11 +14,11 @@
                     colors: {
                         primary: { DEFAULT: '#1d4ed8', light: '#3b82f6', dark: '#1e3a8a' },
                         accent: '#f59e0b',
-                        surface: '#f8fafc',
+                        surface: '#0b1220'
                     },
                     fontFamily: {
                         sans: ['"DM Sans"', 'system-ui', 'sans-serif'],
-                        mono: ['"JetBrains Mono"', 'monospace'],
+                        mono: ['"JetBrains Mono"', 'monospace']
                     }
                 }
             }
@@ -30,41 +30,158 @@
         rel="stylesheet" />
 </head>
 
-<body class="bg-slate-50 font-sans text-slate-800 min-h-screen">
+<body class="bg-[#0b1220] font-sans text-slate-100 min-h-screen">
 
-    <!-- ── Nav ─────────────────────────────────────────────── -->
-    <nav class="bg-primary shadow-lg">
-        <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
-            <a href="/" class="text-white font-bold text-lg tracking-tight flex items-center gap-2">
-                <span class="text-accent text-2xl">⚡</span> G22 Mobility
-            </a>
-            <div class="flex gap-1 text-sm">
-                <a th:href="@{/student1/usecase}"
-                    class="nav-link ml-2 text-slate-200 hover:text-base hover:text-slate-50">S1 Use Case</a>
-                <a th:href="@{/student1/analytics}"
-                    class="nav-link ml-2 text-slate-200 hover:text-base hover:text-slate-50">S1 Analytics</a>
-                <a th:href="@{/student2/usecase}"
-                    class="nav-link ml-2 text-slate-200 hover:text-base hover:text-slate-50">S2 Use Case</a>
-                <a th:href="@{/student2/analytics}"
-                    class="nav-link ml-2 text-slate-200 hover:text-base hover:text-slate-50">S2 Analytics</a>
-                <a th:href="@{/student3/usecase}"
-                    class="nav-link ml-2 text-slate-200 hover:text-base hover:text-slate-50">S3 Use Case</a>
-                <a th:href="@{/student3/analytics}"
-                    class="nav-link ml-2 text-slate-200 hover:text-base hover:text-slate-50">S3 Analytics</a>
+    <!-- Navbar -->
+    <nav class="bg-[#0b1733] border-b border-[#223055] shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+
+                <!-- Brand -->
+                <a th:href="@{/}" class="flex items-center gap-3 text-white font-bold text-2xl tracking-tight">
+                    <span class="text-2xl text-orange-400">⚡</span>
+                    <span>G22 Mobility</span>
+                </a>
+
+                <!-- Desktop nav -->
+                <div class="hidden md:flex items-center gap-3">
+
+                    <!-- Student 1 -->
+                    <div class="relative group">
+                        <button
+                            class="flex items-center gap-2 px-5 py-3 rounded-xl border border-[#34456f] bg-transparent text-slate-200 text-sm font-medium hover:bg-[#14244a] hover:text-white transition">
+                            Student 1 <span class="text-[10px] text-slate-400">▼</span>
+                        </button>
+
+                        <div
+                            class="absolute left-0 top-full mt-2 w-64 bg-[#101c38] border border-[#34456f] rounded-2xl shadow-2xl overflow-hidden opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-150 z-50">
+                            <div class="px-4 py-3 bg-[#13264e] border-b border-[#34456f]">
+                                <p class="text-xs font-semibold text-slate-300 uppercase tracking-wider">Student 1</p>
+                                <p class="text-xs text-slate-400">Ekhtyar, Sediqullah</p>
+                            </div>
+                            <a th:href="@{/student1/usecase}"
+                                class="flex items-center gap-2 px-4 py-3 text-sm text-slate-200 hover:bg-[#18315f] hover:text-white transition-colors">
+                                <span class="text-base">📋</span> Use Case
+                            </a>
+                            <a th:href="@{/student1/analytics}"
+                                class="flex items-center gap-2 px-4 py-3 text-sm text-slate-200 hover:bg-[#18315f] hover:text-white transition-colors">
+                                <span class="text-base">📊</span> Analytics
+                            </a>
+                            <div class="border-t border-[#223055] mx-3"></div>
+                            <a th:href="@{/student1/mongo-usecase}"
+                                class="flex items-center gap-2 px-4 py-3 text-sm text-slate-200 hover:bg-[#18315f] hover:text-white transition-colors">
+                                <span class="text-base">🍃</span> MongoDB Use Case
+                            </a>
+                            <a th:href="@{/student1/mongo-analytics}"
+                                class="flex items-center gap-2 px-4 py-3 text-sm text-slate-200 hover:bg-[#18315f] hover:text-white transition-colors">
+                                <span class="text-base">🍃</span> MongoDB Analytics
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Student 2 -->
+                    <div class="relative group">
+                        <button
+                            class="flex items-center gap-2 px-5 py-3 rounded-xl border border-[#34456f] bg-transparent text-slate-200 text-sm font-medium hover:bg-[#14244a] hover:text-white transition">
+                            Student 2 <span class="text-[10px] text-slate-400">▼</span>
+                        </button>
+
+                        <div
+                            class="absolute left-0 top-full mt-2 w-64 bg-[#101c38] border border-[#34456f] rounded-2xl shadow-2xl overflow-hidden opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-150 z-50">
+                            <div class="px-4 py-3 bg-[#13264e] border-b border-[#34456f]">
+                                <p class="text-xs font-semibold text-slate-300 uppercase tracking-wider">Student 2</p>
+                                <p class="text-xs text-slate-400">Nikben, Mohammad Latif</p>
+                            </div>
+                            <a th:href="@{/student2/usecase}"
+                                class="flex items-center gap-2 px-4 py-3 text-sm text-slate-200 hover:bg-[#18315f] hover:text-white transition-colors">
+                                <span class="text-base">📋</span> Use Case
+                            </a>
+                            <a th:href="@{/student2/analytics}"
+                                class="flex items-center gap-2 px-4 py-3 text-sm text-slate-200 hover:bg-[#18315f] hover:text-white transition-colors">
+                                <span class="text-base">📊</span> Analytics
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Student 3 -->
+                    <div class="relative group">
+                        <button
+                            class="flex items-center gap-2 px-5 py-3 rounded-xl border border-[#34456f] bg-transparent text-slate-200 text-sm font-medium hover:bg-[#14244a] hover:text-white transition">
+                            Student 3 <span class="text-[10px] text-slate-400">▼</span>
+                        </button>
+
+                        <div
+                            class="absolute left-0 top-full mt-2 w-64 bg-[#101c38] border border-[#34456f] rounded-2xl shadow-2xl overflow-hidden opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-150 z-50">
+                            <div class="px-4 py-3 bg-[#13264e] border-b border-[#34456f]">
+                                <p class="text-xs font-semibold text-slate-300 uppercase tracking-wider">Student 3</p>
+                                <p class="text-xs text-slate-400">Sharifzai, Mesbahuddin</p>
+                            </div>
+                            <a th:href="@{/student3/usecase}"
+                                class="flex items-center gap-2 px-4 py-3 text-sm text-slate-200 hover:bg-[#18315f] hover:text-white transition-colors">
+                                <span class="text-base">📋</span> Use Case
+                            </a>
+                            <a th:href="@{/student3/analytics}"
+                                class="flex items-center gap-2 px-4 py-3 text-sm text-slate-200 hover:bg-[#18315f] hover:text-white transition-colors">
+                                <span class="text-base">📊</span> Analytics
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mobile menu -->
+                <details class="md:hidden relative">
+                    <summary
+                        class="list-none cursor-pointer px-4 py-2.5 rounded-xl border border-[#34456f] text-sm text-slate-200 bg-transparent">
+                        Menu
+                    </summary>
+
+                    <div
+                        class="absolute right-0 top-14 w-72 bg-[#101c38] border border-[#34456f] rounded-2xl shadow-2xl overflow-hidden z-50">
+                        <div class="px-4 py-3 bg-[#13264e] border-b border-[#34456f]">
+                            <p class="text-xs font-semibold text-slate-300 uppercase tracking-wider">Student 1</p>
+                            <p class="text-xs text-slate-400">Ekhtyar, Sediqullah</p>
+                        </div>
+                        <a th:href="@{/student1/usecase}"
+                            class="block px-4 py-3 text-sm text-slate-200 hover:bg-[#18315f]">Use Case</a>
+                        <a th:href="@{/student1/analytics}"
+                            class="block px-4 py-3 text-sm text-slate-200 hover:bg-[#18315f]">Analytics</a>
+                        <a th:href="@{/student1/mongo-usecase}"
+                            class="block px-4 py-3 text-sm text-slate-200 hover:bg-[#18315f]">MongoDB Use Case</a>
+                        <a th:href="@{/student1/mongo-analytics}"
+                            class="block px-4 py-3 text-sm text-slate-200 hover:bg-[#18315f]">MongoDB Analytics</a>
+
+                        <div class="border-t border-[#223055]"></div>
+
+                        <div class="px-4 py-3 bg-[#13264e] border-b border-[#34456f]">
+                            <p class="text-xs font-semibold text-slate-300 uppercase tracking-wider">Student 2</p>
+                            <p class="text-xs text-slate-400">Nikben, Mohammad Latif</p>
+                        </div>
+                        <a th:href="@{/student2/usecase}"
+                            class="block px-4 py-3 text-sm text-slate-200 hover:bg-[#18315f]">Use Case</a>
+                        <a th:href="@{/student2/analytics}"
+                            class="block px-4 py-3 text-sm text-slate-200 hover:bg-[#18315f]">Analytics</a>
+
+                        <div class="border-t border-[#223055]"></div>
+
+                        <div class="px-4 py-3 bg-[#13264e] border-b border-[#34456f]">
+                            <p class="text-xs font-semibold text-slate-300 uppercase tracking-wider">Student 3</p>
+                            <p class="text-xs text-slate-400">Sharifzai, Mesbahuddin</p>
+                        </div>
+                        <a th:href="@{/student3/usecase}"
+                            class="block px-4 py-3 text-sm text-slate-200 hover:bg-[#18315f]">Use Case</a>
+                        <a th:href="@{/student3/analytics}"
+                            class="block px-4 py-3 text-sm text-slate-200 hover:bg-[#18315f]">Analytics</a>
+                    </div>
+                </details>
             </div>
         </div>
     </nav>
 
-    <!-- ── Page Content ─────────────────────────────────────── -->
+    <!-- Page Content -->
     <main class="max-w-6xl mx-auto px-4 py-8">
         <th:block th:replace="${content}" />
     </main>
 
-    <style>
-        .nav-link {
-            @apply text-blue-100 hover:text-white hover:bg-blue-700 px-3 py-1.5 rounded-md transition-colors;
-        }
-    </style>
 </body>
 
 </html>

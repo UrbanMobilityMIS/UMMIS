@@ -8,7 +8,6 @@ services:
       MARIADB_DATABASE: mobility_db
       MARIADB_USER: g22user
       MARIADB_PASSWORD: g22password
-    # This command below is the "Kill Switch" for the errors you had
     command: [
       "mysqld",
       "--character-set-server=utf8mb4",
@@ -27,7 +26,6 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: g22user
       MONGO_INITDB_ROOT_PASSWORD: g22password
-      MONGO_INITDB_DATABASE: mobility_nosql
     ports:
       - "27017:27017"
     volumes:

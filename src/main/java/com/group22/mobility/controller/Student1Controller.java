@@ -17,41 +17,100 @@ public class Student1Controller {
 
     private final Student1Service service;
 
-    // ── Use Case page ─────────────────────────────────────────
+    // ════════════════════════════════════════════════════════
+    // MARIADB endpoints
+    // ════════════════════════════════════════════════════════
 
     @GetMapping("/usecase")
     public String useCasePage(Model model) {
         model.addAttribute("form", new MaintenanceLogDto());
-        model.addAttribute("vehicles",    service.getAllVehicles());
+        model.addAttribute("vehicles", service.getAllVehicles());
         model.addAttribute("technicians", service.getAllTechnicians());
         return "student1/usecase";
     }
 
     @PostMapping("/usecase")
     public String submitUseCase(@Valid @ModelAttribute("form") MaintenanceLogDto form,
-                                BindingResult result,
-                                Model model,
-                                RedirectAttributes redirect) {
+            BindingResult result,
+            Model model,
+            RedirectAttributes redirect) {
         if (result.hasErrors()) {
-            model.addAttribute("vehicles",    service.getAllVehicles());
+            model.addAttribute("vehicles", service.getAllVehicles());
             model.addAttribute("technicians", service.getAllTechnicians());
             return "student1/usecase";
         }
         try {
             var log = service.reportDamage(form);
             redirect.addFlashAttribute("success",
-                    "Maintenance Log #" + log.getLogNumber() + " created for Vehicle ID " + log.getVehicle().getId());
+                    "Maintenance Log #" + log.getLogNumber()
+                            + " created for Vehicle ID " + log.getVehicle().getId());
         } catch (Exception e) {
             redirect.addFlashAttribute("error", e.getMessage());
         }
         return "redirect:/student1/usecase";
     }
 
-    // ── Analytics page ────────────────────────────────────────
-
     @GetMapping("/analytics")
     public String analyticsPage(Model model) {
         model.addAttribute("rows", service.getMaintenanceCostReport());
         return "student1/analytics";
+    }
+
+    // ════════════════════════════════════════════════════════
+    // MONGODB endpoints
+    // ════════════════════════════════════════════════════════
+
+    @GetMapping("/mongo-usecase")
+    public String mongoUseCasePage(Model model) {
+        model.addAttribute("form", new MaintenanceLogDto());
+        model.addAttribute("vehicles", service.getAllVehicles());
+        model.addAttribute("technicians", service.getAllTechnicians());
+        model.addAttribute("docCount", service.getMongoDocumentCount());
+        return "student1/mongo-usecase";
+    }
+
+    @PostMapping("/mongo-usecase")
+    public String submitMongoUseCase(@Valid @ModelAttribute("form") MaintenanceLogDto form,
+            BindingResult result,
+            Model model,
+            RedirectAttributes redirect) {
+        if (result.hasErrors()) {
+            model.addAttribute("vehicles", service.getAllVehicles());
+            model.addAttribute("technicians", service.getAllTechnicians());
+            model.addAttribute("docCount", service.getMongoDocumentCount());
+            return "student1/mongo-usecase";
+        }
+        try {
+            var doc = service.reportDamageMongo(form);
+            redirect.addFlashAttribute("success",
+                    "Log added to MongoDB document for VIN: " + doc.getVin()
+                            + " (total logs: " + doc.getMaintenanceLogs().size() + ")");
+        } catch (IllegalStateException e) {
+            // Migration not done yet
+            redirect.addFlashAttribute("error", e.getMessage());
+        } catch (Exception e) {
+            redirect.addFlashAttribute("error", e.getMessage());
+        }
+        return "redirect:/student1/mongo-usecase";
+    }
+
+    @GetMapping("/mongo-analytics")
+    public String mongoAnalyticsPage(Model model) {
+        model.addAttribute("rows", service.getMongoMaintenanceCostReport());
+        model.addAttribute("docCount", service.getMongoDocumentCount());
+        return "student1/mongo-analytics";
+    }
+
+    /** Trigger migration from MariaDB → MongoDB */
+    @PostMapping("/migrate")
+    public String migrate(RedirectAttributes redirect) {
+        try {
+            int count = service.migrateToMongo();
+            redirect.addFlashAttribute("success",
+                    "Migration complete! " + count + " vehicle documents inserted into MongoDB.");
+        } catch (Exception e) {
+            redirect.addFlashAttribute("error", "Migration failed: " + e.getMessage());
+        }
+        return "redirect:/student1/mongo-usecase";
     }
 }

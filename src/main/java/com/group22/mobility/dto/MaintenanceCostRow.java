@@ -10,7 +10,7 @@ public class MaintenanceCostRow {
     private String stationAddress;
     private String vehicleVin;
     private String vehicleModel;
-    private Long   totalLogs;
+    private Long totalLogs;
     private BigDecimal totalCost;
     private BigDecimal avgCost;
 }
