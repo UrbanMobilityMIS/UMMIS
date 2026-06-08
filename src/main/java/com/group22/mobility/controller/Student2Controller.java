@@ -55,7 +55,7 @@ public class Student2Controller {
     // USE CASE PAGE
     // =========================
 
-         @GetMapping("/mongodb-usecase")
+         @GetMapping("/mongo-usecase")
         public String mongoUseCase(Model model) {
 
                 model.addAttribute(
@@ -71,7 +71,7 @@ public class Student2Controller {
                                 .toList()
                 );
 
-        return "student2/mongodb-usecase";
+        return "student2/mongo-usecase";
 } 
 
                 @GetMapping("/usecase")
@@ -309,7 +309,7 @@ public class Student2Controller {
 
     redirectAttributes.addFlashAttribute("message", message);
 
-    return "redirect:/student2/mongodb-usecase";
+    return "redirect:/student2/mongo-usecase";
 }
 
     // =========================

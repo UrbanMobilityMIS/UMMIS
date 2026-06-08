@@ -10,7 +10,7 @@
         Migrate to MongoDB
     </h1>
     <p style="color:#6b7280; margin-bottom:2rem;">
-        Copies all rental records from MariaDB into the MongoDB
+        Migrates data from MariaDB tables into MongoDB collections.
         <code>rentals</code> collection.
     </p>
 
@@ -39,44 +39,6 @@
     </form>
     <div class="bg-white rounded-xl shadow p-6 mt-8"
      th:if="${mongoRentals != null and !#lists.isEmpty(mongoRentals)}">
-
-    <h2 class="text-xl font-bold mb-4">
-        Migrated Rental Records
-    </h2>
-
-    <table class="w-full border-collapse">
-
-        <thead>
-        <tr class="border-b">
-            <th class="text-left p-3">Rental ID</th>
-            <th class="text-left p-3">User</th>
-            <th class="text-left p-3">Vehicle</th>
-        </tr>
-        </thead>
-
-        <tbody>
-
-        <tr th:each="r : ${mongoRentals}"
-            class="border-b">
-
-            <td class="p-3"
-                th:text="${r.rentalId}">
-            </td>
-
-            <td class="p-3"
-                th:text="${r.userEmail}">
-            </td>
-
-            <td class="p-3"
-                th:text="${r.vehicleModel}">
-            </td>
-
-        </tr>
-
-        </tbody>
-
-    </table>
-
 </div>
 </section>
 </body>
