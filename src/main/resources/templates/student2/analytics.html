@@ -68,18 +68,20 @@
 
 </div>
         <!-- Summary Cards -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-10">
 
             <!-- Total Rentals -->
             <div class="bg-white rounded-2xl shadow-md border border-slate-200 p-6">
+
                 <p class="text-slate-500 text-sm mb-2">
-                    Total Rentals
+                    Active Rentals
                 </p>
 
                 <h2 class="text-5xl font-bold text-primary"
-                    th:text="${totalRentals}">
+                    th:text="${activeRentals.size()}">
                     0
                 </h2>
+
             </div>
 
             <!-- Most Active User -->
@@ -109,116 +111,148 @@
         </div>
 
         <!-- Rentals Per Vehicle -->
-        <div class="bg-white rounded-2xl shadow-md border border-slate-200 mb-10">
 
-            <div class="p-6 border-b border-slate-200">
-                <h2 class="text-2xl font-bold text-slate-800">
-                    Rentals Per Vehicle
-                </h2>
+            <div class="bg-white rounded-2xl shadow-md border border-slate-200 mb-10">
+
+                <div class="p-6 border-b border-slate-200">
+                    <h2 class="text-2xl font-bold text-slate-800">
+                        Current Vehicle Status
+                    </h2>
+                </div>
+
+                <div class="p-6 overflow-x-auto">
+
+                    <table class="min-w-full">
+
+                        <thead class="bg-slate-100">
+
+                        <tr>
+                            <th class="text-left px-4 py-3">VIN</th>
+                            <th class="text-left px-4 py-3">Model</th>
+                            <th class="text-left px-4 py-3">Status</th>
+                        </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                        <tr th:each="vehicle : ${vehicles}">
+
+                            <td th:text="${vehicle.vin}"></td>
+
+                            <td th:text="${vehicle.modelType}"></td>
+
+                            <td>
+                                <span
+                                        th:if="${vehicle.available}"
+                                        class="text-green-600 font-semibold">
+                                    AVAILABLE
+                                </span>
+
+                                <span
+                                        th:unless="${vehicle.available}"
+                                        class="text-red-600 font-semibold">
+                                    RENTED
+                                </span>
+                            </td>
+
+                        </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
             </div>
 
-            <div class="p-6 overflow-x-auto">
+                <!-- Current Active Rentals -->
 
-                <table class="min-w-full">
-
-                    <thead class="bg-slate-100">
-
-                    <tr>
-                        <th class="text-left px-4 py-3 font-semibold text-slate-700">
-                            Vehicle
-                        </th>
-
-                        <th class="text-left px-4 py-3 font-semibold text-slate-700">
-                            Rental Count
-                        </th>
-                    </tr>
-
-                    </thead>
-
-                    <tbody>
-
-                    <tr th:each="entry : ${rentalsPerVehicle}"
-                        class="border-b border-slate-200 hover:bg-slate-50">
-
-                        <td class="px-4 py-4 text-slate-700"
-                            th:text="${entry.key}">
-                            Vehicle
-                        </td>
-
-                        <td class="px-4 py-4 font-semibold text-primary"
-                            th:text="${entry.value}">
-                            0
-                        </td>
-
-                    </tr>
-
-                    </tbody>
-
-                </table>
-
-            </div>
-
-        </div>
-
-        <!-- here is filtered Rental Records -->
         <div class="bg-white rounded-2xl shadow-md border border-slate-200">
-
-            <div class="p-6 border-b border-slate-200">
-                <h2 class="text-2xl font-bold text-slate-800">
-                    Filtered Rental Records
-                </h2>
-            </div>
-
-            <div class="p-6 overflow-x-auto">
-
-                <table class="min-w-full">
-
-                    <thead class="bg-slate-100">
-
-                    <tr>
-
-                        <th class="text-left px-4 py-3 font-semibold text-slate-700">
-                            User
-                        </th>
-
-                        <th class="text-left px-4 py-3 font-semibold text-slate-700">
-                            Vehicle
-                        </th>
-
-                        <th class="text-left px-4 py-3 font-semibold text-slate-700">
-                            Start Time
-                        </th>
-
-                    </tr>
-
-                    </thead>
-
-                    <tbody>
-
-                    <tr th:if="${#lists.isEmpty(rentals)}">
-                         <td colspan="3" style="text-align:center; padding: 30px;">
-                            No rental activity found for selected dates.
-                        </td>
-                    </tr>
-
-                    <tr th:each="rental : ${rentals}">
-                         <td th:text="${rental.user.emailAddress}"></td>
-
-                         <td th:text="${rental.vehicle.modelType}"></td>
-
-                         <td th:text="${#temporals.format(rental.startTime, 'dd MMM yyyy HH:mm')}"></td>
-                    </tr>
-
-                    </tbody>
-
-                </table>
-
-            </div>
-
+        <div class="p-6 border-b border-slate-200">
+            <h2 class="text-2xl font-bold text-slate-800">
+                Current Active Rentals
+            </h2>
         </div>
 
-    </div>
+        <div class="p-6 overflow-x-auto">
 
+            <table class="min-w-full">
+
+                <thead class="bg-slate-100">
+
+                <tr>
+
+                    <th class="text-left px-4 py-3 font-semibold text-slate-700">
+                        User
+                    </th>
+
+                    <th class="text-left px-4 py-3 font-semibold text-slate-700">
+                        Vehicle
+                    </th>
+
+                    <th class="text-left px-4 py-3 font-semibold text-slate-700">
+                        Start Time
+                    </th>
+
+                    <th class="text-left px-4 py-3 font-semibold text-slate-700">
+                        Action
+                    </th>
+
+                </tr>
+
+                </thead>
+
+                <tbody>
+
+                <tr th:if="${#lists.isEmpty(activeRentals)}">
+                    <td colspan="3"
+                        style="text-align:center; padding: 30px;">
+                        No active rentals.
+                    </td>
+                </tr>
+
+                <tr th:each="rental : ${activeRentals}">
+
+                    <td th:text="${rental.user.emailAddress}">
+                    </td>
+
+                    <td th:text="${rental.vehicle.modelType}">
+                    </td>
+
+                    <td th:text="${#temporals.format(rental.startTime, 'dd MMM yyyy HH:mm')}">
+                    </td>
+
+                    <td>
+
+                        <form
+                                th:action="@{/student2/return-rental/{id}(id=${rental.id})}"
+                                method="post">
+
+                            <button
+                                    type="submit"
+                                    class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg">
+
+                                Return Vehicle
+
+                            </button>
+                         </form>
+                     </td>
+
+                  </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+</div>
+  <div class="mt-6">
+            <a th:href="@{/}"
+               class="text-blue-600 hover:underline">
+                ← Back to Home
+            </a>
+    </div>
 </th:block>
 
 </body>

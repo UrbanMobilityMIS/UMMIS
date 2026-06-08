@@ -15,7 +15,7 @@
         <!-- Page Header -->
         <div class="mb-10">
             <h1 class="text-5xl font-bold text-primary mb-3">
-                Rent a Vehicle
+                MariaDB Vehicle Rental
             </h1>
 
             <p class="text-slate-500 text-lg">
@@ -66,12 +66,13 @@
                         <option value="" disabled selected>
                             Select one of the vehicles
                         </option>
-
                         <option
                                 th:each="vehicle : ${vehicles}"
                                 th:value="${vehicle.id}"
-                                th:text="${vehicle.modelType + ' - ' + vehicle.vin}"
-                        ></option>
+                                th:text="${vehicle.modelType + ' - ' + vehicle.vin + (!vehicle.available ? ' (RENTED)' : '')}"
+                                th:disabled="${!vehicle.available}">
+                        </option>
+
                     </select>
 
                 <!-- Submit Button -->
@@ -105,18 +106,22 @@
 
             </form>
 
-        </div>
 
+        </div>
+        <div class="mt-6">
+            <a th:href="@{/}"
+               class="text-blue-600 hover:underline">
+                ← Back to Home
+            </a>
     </div>
+    <div class="mt-6">
+            <a th:href="@{/student2/analytics}"
+               class="text-blue-600 hover:underline">
+                ← Back to Analytics
+            </a>
+    </div>
+     
 
 </th:block>
-<div class="mt-10 text-center pb-10">
-    <a
-            th:href="@{/student2/usecase}"
-            class="text-primary text-lg font-semibold hover:underline"
-    >
-        ← Back to Home Page
-    </a>
-</div>
 </body>
 </html>

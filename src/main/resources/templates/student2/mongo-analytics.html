@@ -61,13 +61,14 @@
                     <th class="text-left p-3">User Email</th>
                     <th class="text-left p-3">Vehicle</th>
                     <th class="text-left p-3">Start Time</th>
+                    <th class="text-left p-3">Action</th>
                 </tr>
                 </thead>
 
                 <tbody>
 
                 <tr th:if="${#lists.isEmpty(mongoRentals)}">
-                    <td colspan="4"
+                    <td colspan="5"
                         class="p-4 text-center text-gray-500">
                         No MongoDB records found.
                     </td>
@@ -89,7 +90,27 @@
                     </td>
 
                     <td class="p-3"
-                        th:text="${r.startTime}">
+                        th:text="${#temporals.format(r.startTime, 'dd MMM yyyy HH:mm')}">
+                    </td>
+
+                    <td class="p-3">
+
+                        <form th:if="${r.endTime == null}"
+                            th:action="@{/student2/mongo-return-rental/{id}(id=${r.rentalId})}"
+                            method="post">
+
+                            <button type="submit"
+                                    class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg">
+                                Return Vehicle
+                            </button>
+
+                        </form>
+
+                        <span th:if="${r.endTime != null}"
+                            class="text-green-600 font-semibold">
+                            Returned
+                        </span>
+
                     </td>
 
                 </tr>
@@ -110,6 +131,5 @@
     </div>
 
 </th:block>
-
 </body>
 </html>

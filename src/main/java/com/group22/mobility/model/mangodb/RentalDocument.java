@@ -1,26 +1,23 @@
 package com.group22.mobility.model.mangodb;
-
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-
 import java.time.LocalDateTime;
 
 @Document(collection = "rentals")
 public class RentalDocument {
-
     @Id
     private String id;
-
     private Integer rentalId;
-
     private Integer userId;
+    @Indexed
     private String userEmail;
-
     private Integer vehicleId;
+    @Indexed
     private String vehicleModel;
-
     private LocalDateTime startTime;
-
+    @Indexed
+    private LocalDateTime endTime;
     public String getId() {
         return id;
     }
@@ -75,5 +72,13 @@ public class RentalDocument {
 
     public void setStartTime(LocalDateTime startTime) {
         this.startTime = startTime;
+    }
+
+    public LocalDateTime getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(LocalDateTime endTime) {
+        this.endTime = endTime;
     }
 }

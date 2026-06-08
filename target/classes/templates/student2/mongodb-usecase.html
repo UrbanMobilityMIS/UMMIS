@@ -3,11 +3,10 @@
       th:replace="~{layouts/main :: layout(~{::title}, ~{::main-content})}">
 
 <head>
-    <title>Rent Vehicle</title>
+    <title>MongoDB Vehicle Rental</title>
 </head>
 
 <body>
-
 <th:block th:fragment="main-content">
 
     <div class="max-w-5xl mx-auto py-16 px-6">
@@ -15,19 +14,19 @@
         <!-- Page Header -->
         <div class="mb-10">
             <h1 class="text-5xl font-bold text-primary mb-3">
-                MariaDB Vehicle Rental
+             MongoDB Vehicle Rental
             </h1>
 
-            <p class="text-slate-500 text-lg">
-                Select a user and vehicle to create a rental.
-            </p>
+        <p class="text-slate-500 text-lg">
+         Create rental records directly in MongoDB.
+        </p>
         </div>
 
         <!-- Main Card -->
         <div class="bg-white rounded-3xl shadow-md border border-slate-200 p-10">
 
             <form
-                    th:action="@{/student2/rent}"
+                    th:action="@{/student2/mongo-rent}"
                     method="post"
                     class="space-y-8"
             >
@@ -47,10 +46,10 @@
                     </option>
 
                     <option
-                            th:each="user : ${users}"
-                            th:value="${user.id}"
-                            th:text="${user.emailAddress}"
-                    ></option>
+                        th:each="user : ${users}"
+                        th:value="${user.userId}"
+                        th:text="${user.emailAddress}">
+                    </option>
                 </select>
 
                 <!-- Vehicle Selection -->
@@ -66,13 +65,12 @@
                         <option value="" disabled selected>
                             Select one of the vehicles
                         </option>
-                        <option
-                                th:each="vehicle : ${vehicles}"
-                                th:value="${vehicle.id}"
-                                th:text="${vehicle.modelType + ' - ' + vehicle.vin + (!vehicle.available ? ' (RENTED)' : '')}"
-                                th:disabled="${!vehicle.available}">
-                        </option>
 
+                        <option
+                            th:each="vehicle : ${vehicles}"
+                            th:value="${vehicle.vehicleId}"
+                            th:text="${vehicle.modelType + ' - ' + vehicle.vin}">
+                        </option>
                     </select>
 
                 <!-- Submit Button -->
@@ -99,28 +97,21 @@
              th:disabled="${#lists.isEmpty(vehicles)}"
              class="bg-primary hover:bg-blue-700 text-white text-lg font-semibold px-8 py-3 rounded-xl shadow transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
     >
-             Rent Vehicle
+             Rent Vehicle (MongoDB)
              </button>
 
                </div>
 
             </form>
 
-
         </div>
-        <div class="mt-6">
+       <div class="mt-6">
             <a th:href="@{/}"
                class="text-blue-600 hover:underline">
                 ← Back to Home
             </a>
+        </div>
     </div>
-    <div class="mt-6">
-            <a th:href="@{/student2/analytics}"
-               class="text-blue-600 hover:underline">
-                ← Back to Analytics
-            </a>
-    </div>
-     
 
 </th:block>
 </body>
