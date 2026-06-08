@@ -12,6 +12,7 @@ import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.Map;
 import java.util.stream.Collectors;
+import com.group22.mobility.dto.MongoTechnicianUseCaseDto;
 
 import java.util.List;
 
@@ -88,4 +89,26 @@ public class Student3MongoService {
             .sorted(Comparator.comparing(Level2TechnicianMongoReportRow::getTotalCost).reversed())
             .toList();
     }
+
+    public TechnicianMaintenanceDocument createMongoTechnicianMaintenance(MongoTechnicianUseCaseDto dto) {
+
+    long existingCount = mongoRepository.count();
+
+    TechnicianMaintenanceDocument document = new TechnicianMaintenanceDocument(
+            null,
+            (int) existingCount + 1,
+            dto.getEmployeeName(),
+            "Level 2",
+            dto.getToolkitId(),
+            (int) existingCount + 1,
+            dto.getRepairDate(),
+            dto.getServiceCost(),
+            (int) existingCount + 1,
+            dto.getVehicleVin(),
+            dto.getVehicleModel()
+    );
+
+    return mongoRepository.save(document);
+        }
+
 }

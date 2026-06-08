@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layouts/main :: layout(~{::title}, ~{::main-content})}">
+<head><title>MongoDB Migration – Student 3</title></head>
+<body>
+<th:block th:fragment="main-content">
+
+    <div class="max-w-3xl mx-auto">
+        <div class="mb-6">
+            <p class="text-sm text-slate-400 mb-1">Student 3 · MongoDB Migration</p>
+            <h1 class="text-2xl font-bold text-slate-800">Migrate Level 2 Technician Maintenance Data</h1>
+            <p class="text-slate-500 mt-1 text-sm">
+                This operation clears the Student 3 MongoDB collection and migrates Level 2 technician maintenance data from MariaDB.
+            </p>
+        </div>
+
+        <div class="bg-white rounded-2xl shadow p-6">
+            <form th:action="@{/student3/mongo/migrate}" method="post">
+                <button type="submit"
+                        class="bg-primary text-white text-sm font-medium px-5 py-2.5 rounded-lg hover:bg-primary-dark transition-colors">
+                    Migrate MariaDB Data to MongoDB
+                </button>
+            </form>
+
+            <p class="text-xs text-slate-400 mt-4">
+                Source: MariaDB tables Employee, Technician, Maintenance_Log and Vehicle.
+                Target: MongoDB collection student3_technician_maintenance.
+            </p>
+        </div>
+    </div>
+
+</th:block>
+</body>
+</html>
