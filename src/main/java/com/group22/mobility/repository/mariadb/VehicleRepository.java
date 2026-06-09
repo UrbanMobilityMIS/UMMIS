@@ -13,4 +13,6 @@ public interface VehicleRepository extends JpaRepository<Vehicle, Integer> {
 
     @Query("SELECT DISTINCT v FROM Vehicle v LEFT JOIN FETCH v.maintenanceLogs ml LEFT JOIN FETCH ml.technician t LEFT JOIN FETCH t.employee LEFT JOIN FETCH v.station")
     List<Vehicle> findAllWithDetails();
+
+    List<Vehicle> findByAvailableTrue();
 }

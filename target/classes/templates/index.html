@@ -8,60 +8,111 @@
 <body>
     <th:block th:fragment="main-content">
 
-        <div class="text-center py-16">
+        <div class="text-center py-8">
             <div class="text-6xl mb-4">⚡</div>
-            <h1 class="text-4xl font-bold text-primary mb-3">Urban Mobility System</h1>
-            <p class="text-slate-500 text-lg mb-2">VU Information Management and Systems Engineering (2026S)</p>
-            <p class="text-slate-400 mb-10">Group 22 · Milestone 2</p>
+            <h1 class="text-4xl font-bold text-slate-100 mb-3">Urban Mobility System</h1>
+            <p class="text-slate-400 text-lg mb-2">VU Information Management and Systems Engineering (2026S)</p>
+            <p class="text-slate-500 mb-10">Group 22 · Milestone 2</p>
+            <div class="mb-4 flex justify-center">
+                <form th:action="@{/admin/reseed-mariadb}" method="post">
+                    <button type="submit"
+                        class="inline-flex items-center rounded-2xl bg-amber-500 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-amber-950/30 transition hover:bg-amber-600">
+                        Reset & Load MariaDB Sample Data
+                    </button>
+                </form>
+            </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto text-left">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto text-left">
 
                 <!-- Student 1 -->
-                <div class="bg-white rounded-2xl shadow p-6 border-t-4 border-primary">
-                    <h2 class="font-bold text-lg mb-1">Student 1</h2>
+                <div
+                    class="bg-[#101c38] rounded-2xl shadow-2xl p-6 border border-[#223055] border-t-4 border-t-primary">
+                    <h2 class="font-bold text-lg mb-1 text-slate-100">Student 1</h2>
                     <p class="text-slate-400 text-sm mb-1">Ekhtyar, Sediqullah</p>
                     <p class="text-slate-500 text-sm mb-4">Report Vehicle Damage &amp; Maintenance Cost Analysis</p>
                     <div class="flex flex-col gap-2">
-                        <a th:href="@{/student1/usecase}" class="btn-primary">→ Use Case</a>
-                        <a th:href="@{/student1/analytics}" class="btn-outline">→ Analytics</a>
-                        <a th:href="@{/student1/mongo-usecase}" class="btn-outline">→ MongoDB Use Case</a>
-                        <a th:href="@{/student1/mongo-analytics}" class="btn-outline">→ MongoDB Analytics</a>
+                        <a th:href="@{/student1/usecase}"
+                            class="block text-center bg-primary text-white rounded-xl py-2.5 px-4 text-sm font-medium hover:bg-primary-dark transition-colors shadow-lg shadow-blue-950/30">
+                            → Use Case
+                        </a>
+                        <a th:href="@{/student1/analytics}"
+                            class="block text-center border border-[#34456f] text-slate-200 rounded-xl py-2.5 px-4 text-sm font-medium hover:bg-[#14244a] transition-colors">
+                            → Analytics
+                        </a>
+                        <a th:href="@{/student1/mongo-usecase}"
+                            class="block text-center border border-[#34456f] text-slate-200 rounded-xl py-2.5 px-4 text-sm font-medium hover:bg-[#14244a] transition-colors">
+                            → MongoDB Use Case
+                        </a>
+                        <a th:href="@{/student1/mongo-analytics}"
+                            class="block text-center border border-[#34456f] text-slate-200 rounded-xl py-2.5 px-4 text-sm font-medium hover:bg-[#14244a] transition-colors">
+                            → MongoDB Analytics
+                        </a>
                     </div>
                 </div>
 
                 <!-- Student 2 -->
-                <div class="bg-white rounded-2xl shadow p-6 border-t-4 border-blue-400">
-                    <h2 class="font-bold text-lg mb-1">Student 2</h2>
+                <div
+                    class="bg-[#101c38] rounded-2xl shadow-2xl p-6 border border-[#223055] border-t-4 border-t-sky-400">
+                    <h2 class="font-bold text-lg mb-1 text-slate-100">Student 2</h2>
                     <p class="text-slate-400 text-sm mb-1">Nikben, Mohammad Latif</p>
                     <p class="text-slate-500 text-sm mb-4">Rent a Vehicle &amp; Rental Activity Report</p>
                     <div class="flex flex-col gap-2">
-                        <a th:href="@{/student2/usecase}" class="btn-primary">→ Use Case</a>
-                        <a th:href="@{/student2/analytics}" class="btn-outline">→ Analytics</a>
+                        <a th:href="@{/student2/usecase}"
+                            class="block text-center bg-primary text-white rounded-xl py-2.5 px-4 text-sm font-medium hover:bg-primary-dark transition-colors shadow-lg shadow-blue-950/30">
+                            → Use Case
+                        </a>
+                        <a th:href="@{/student2/analytics}"
+                            class="block text-center border border-[#34456f] text-slate-200 rounded-xl py-2.5 px-4 text-sm font-medium hover:bg-[#14244a] transition-colors">
+                            → Analytics
+                        </a>
+                        <a th:href="@{/student2/migrate}"
+                            class="block text-center border border-[#34456f] text-slate-200 rounded-xl py-2.5 px-4 text-sm font-medium hover:bg-[#14244a] transition-colors">
+                            → Migrate to MongoDB
+                        </a>
+                        <a th:href="@{/student2/mongo-usecase}"
+                            class="block text-center border border-[#34456f] text-slate-200 rounded-xl py-2.5 px-4 text-sm font-medium hover:bg-[#14244a] transition-colors">
+                            → MongoDB Use Case
+                        </a>
+                        <a th:href="@{/student2/mongo-analytics}"
+                            class="block text-center border border-[#34456f] text-slate-200 rounded-xl py-2.5 px-4 text-sm font-medium hover:bg-[#14244a] transition-colors">
+                            → MongoDB Analytics
+                        </a>
                     </div>
                 </div>
 
                 <!-- Student 3 -->
-                <div class="bg-white rounded-2xl shadow p-6 border-t-4 border-indigo-400">
-                    <h2 class="font-bold text-lg mb-1">Student 3</h2>
+                <div
+                    class="bg-[#101c38] rounded-2xl shadow-2xl p-6 border border-[#223055] border-t-4 border-t-indigo-400">
+                    <h2 class="font-bold text-lg mb-1 text-slate-100">Student 3</h2>
                     <p class="text-slate-400 text-sm mb-1">Sharifzai, Mesbahuddin</p>
                     <p class="text-slate-500 text-sm mb-4">Onboard Technician &amp; Level 2 Maintenance Report</p>
                     <div class="flex flex-col gap-2">
-                        <a th:href="@{/student3/usecase}" class="btn-primary">→ Use Case</a>
-                        <a th:href="@{/student3/analytics}" class="btn-outline">→ Analytics</a>
+                        <a th:href="@{/student3/usecase}"
+                            class="block text-center bg-primary text-white rounded-xl py-2.5 px-4 text-sm font-medium hover:bg-primary-dark transition-colors shadow-lg shadow-blue-950/30">
+                            → Use Case
+                        </a>
+                        <a th:href="@{/student3/analytics}"
+                            class="block text-center border border-[#34456f] text-slate-200 rounded-xl py-2.5 px-4 text-sm font-medium hover:bg-[#14244a] transition-colors">
+                            → Analytics
+                        </a>
+                        <a th:href="@{/student3/mongo-migration}"
+                            class="block text-center border border-[#34456f] text-slate-200 rounded-xl py-2.5 px-4 text-sm font-medium hover:bg-[#14244a] transition-colors">
+                            → MongoDB Migration
+                        </a>
+
+                        <a th:href="@{/student3/mongo-usecase}"
+                            class="block text-center border border-[#34456f] text-slate-200 rounded-xl py-2.5 px-4 text-sm font-medium hover:bg-[#14244a] transition-colors">
+                            → MongoDB Use Case
+                        </a>
+                        <a th:href="@{/student3/mongo-analytics}"
+                            class="block text-center border border-[#34456f] text-slate-200 rounded-xl py-2.5 px-4 text-sm font-medium hover:bg-[#14244a] transition-colors">
+                            → MongoDB Analytics
+                        </a>
                     </div>
                 </div>
             </div>
+
         </div>
-
-        <style>
-            .btn-primary {
-                @apply block text-center bg-primary text-white rounded-lg py-2 px-4 text-sm font-medium hover:bg-primary-dark transition-colors;
-            }
-
-            .btn-outline {
-                @apply block text-center border border-primary text-primary rounded-lg py-2 px-4 text-sm font-medium hover:bg-blue-50 transition-colors;
-            }
-        </style>
 
     </th:block>
 </body>

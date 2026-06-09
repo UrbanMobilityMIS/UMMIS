@@ -28,4 +28,11 @@ public class Vehicle {
 
     @OneToMany(mappedBy = "vehicle")
     private List<MaintenanceLog> maintenanceLogs;
+
+    @Column(name = "available", columnDefinition = "tinyint(1) default 1")
+    private Boolean available = true;
+
+    public boolean isAvailable() {
+        return available != null && available;
+    }
 }

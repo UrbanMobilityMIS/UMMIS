@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/main :: layout(~{::title}, ~{::main-content})}">
+
+<head>
+    <title>MongoDB Use Case – Student 3</title>
+</head>
+
+<body>
+    <th:block th:fragment="main-content">
+
+        <div class="max-w-3xl mx-auto text-slate-100">
+            <div class="mb-6">
+                <p class="text-sm text-slate-400 mb-1">Student 3 · MongoDB Use Case</p>
+                <h1 class="text-2xl font-bold text-slate-100">Onboard New Level 2 Technician and Record Initial
+                    Maintenance Task</h1>
+                <p class="text-slate-400 mt-1 text-sm">
+                    Onboard a technician and save the initial maintenance task directly in MongoDB.
+                </p>
+            </div>
+
+            <div th:if="${success}"
+                class="mb-6 rounded-2xl border border-green-900/40 bg-[#10261c] text-green-100 px-4 py-3 text-sm">
+                <span th:text="${success}"></span>
+            </div>
+
+            <form th:action="@{/student3/mongo/usecase}" th:object="${dto}" method="post"
+                class="bg-[#101c38] rounded-2xl shadow-2xl p-8 space-y-8 border border-[#223055]">
+
+                <!-- Employee Information -->
+                <section>
+                    <h2 class="text-lg font-semibold text-slate-100 mb-4">Employee Information</h2>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="label">Employee Name</label>
+                            <input class="input" type="text" th:field="*{employeeName}"
+                                placeholder="Enter employee name" required>
+                        </div>
+
+                        <div>
+                            <label class="label">Document Source</label>
+                            <input class="input input-readonly" type="text" value="MongoDB Document" readonly>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Technician Information -->
+                <section>
+                    <h2 class="text-lg font-semibold text-slate-100 mb-4">Technician Information</h2>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="label">Toolkit ID</label>
+                            <input class="input" type="text" th:field="*{toolkitId}" placeholder="Enter toolkit ID"
+                                required>
+                        </div>
+
+                        <div>
+                            <label class="label">Certification Level</label>
+                            <input class="input input-readonly" type="text" th:field="*{certificationLevel}" readonly>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Initial Maintenance Task -->
+                <section>
+                    <h2 class="text-lg font-semibold text-slate-100 mb-4">Initial Maintenance Task</h2>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="label">Vehicle VIN</label>
+                            <input class="input" type="text" th:field="*{vehicleVin}" placeholder="Enter vehicle VIN"
+                                required>
+                        </div>
+
+                        <div>
+                            <label class="label">Repair Date</label>
+                            <input class="input" type="date" th:field="*{repairDate}" required
+                                style="color-scheme: dark;">
+                        </div>
+
+                        <div>
+                            <label class="label">Vehicle Model</label>
+                            <input class="input" type="text" th:field="*{vehicleModel}"
+                                placeholder="Enter vehicle model" required>
+                        </div>
+
+                        <div>
+                            <label class="label">Service Cost</label>
+                            <input class="input" type="number" step="0.01" th:field="*{serviceCost}"
+                                placeholder="Enter service cost" required>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Explanation Box -->
+                <div class="rounded-xl bg-[#0e2230] border border-blue-900/40 px-4 py-3 text-sm text-slate-300">
+                    This NoSQL use case stores the technician, maintenance task, and vehicle details
+                    as one denormalized MongoDB document in the
+                    <code
+                        class="bg-[#101c38] px-1 rounded font-mono text-xs text-slate-200">student3_technician_maintenance</code>
+                    collection.
+                </div>
+
+                <!-- Actions -->
+                <div class="flex justify-between items-center pt-2">
+                    <a th:href="@{/student3/mongo-analytics}" class="text-primary-light text-sm hover:underline">
+                        View MongoDB Analytics →
+                    </a>
+
+                    <button type="submit"
+                        class="bg-primary hover:bg-primary-dark text-white text-sm font-medium px-5 py-2.5 rounded-lg transition-colors shadow-lg shadow-blue-950/30">
+                        Save MongoDB Technician
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <style>
+            .label {
+                display: block;
+                font-size: 0.875rem;
+                font-weight: 500;
+                color: rgb(203 213 225);
+                margin-bottom: 0.25rem;
+            }
+
+            .input {
+                width: 100%;
+                border-radius: 0.75rem;
+                border: 1px solid #2c3c63;
+                background: #0b1733;
+                padding: 0.75rem 1rem;
+                font-size: 0.875rem;
+                color: rgb(241 245 249);
+                outline: none;
+                transition: all 0.15s ease;
+            }
+
+            .input::placeholder {
+                color: rgb(100 116 139);
+            }
+
+            .input:hover {
+                border-color: #425887;
+            }
+
+            .input:focus {
+                border-color: #3b82f6;
+                box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.25);
+            }
+
+            .input[readonly],
+            .input-readonly {
+                background: #13264e;
+                color: rgb(148 163 184);
+                cursor: not-allowed;
+            }
+
+            input[type="date"] {
+                color-scheme: dark;
+            }
+        </style>
+
+    </th:block>
+</body>
+
+</html>

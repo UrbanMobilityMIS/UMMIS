@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layouts/main :: layout(~{::title}, ~{::main-content})}">
+<head><title>Placeholder</title></head>
+<body>
+<th:block th:fragment="main-content">
+    <div class="max-w-xl mx-auto text-center py-20">
+        <div class="text-5xl mb-4">🚧</div>
+        <h1 class="text-2xl font-bold mb-2">Coming Soon</h1>
+        <p class="text-slate-400 text-sm">This section is a placeholder. Implement following the Student 1 pattern.</p>
+        <a href="/" class="mt-6 inline-block text-primary text-sm hover:underline">← Back to Home</a>
+    </div>
+</th:block>
+</body>
+</html>

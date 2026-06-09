@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/main :: layout(~{::title}, ~{::main-content})}">
+
+<head>
+    <title>MongoDB Vehicle Rental</title>
+</head>
+
+<body>
+    <th:block th:fragment="main-content">
+
+        <div class="max-w-5xl mx-auto py-10 px-6 text-slate-100">
+
+            <!-- Page Header -->
+            <div class="mb-10">
+                <h1 class="text-4xl md:text-5xl font-bold text-slate-100 mb-3">
+                    MongoDB Vehicle Rental
+                </h1>
+                <p class="text-slate-400 text-lg">
+                    Create rental records directly in MongoDB.
+                </p>
+            </div>
+
+            <!-- Main Card -->
+            <div class="bg-[#101c38] rounded-3xl shadow-2xl border border-[#223055] p-8 md:p-10">
+
+                <form th:action="@{/student2/mongo-rent}" method="post" class="space-y-8">
+
+                    <!-- User Selection -->
+                    <div>
+                        <label class="block text-lg md:text-xl font-semibold text-slate-100 mb-3">
+                            User
+                        </label>
+
+                        <div class="relative">
+                            <select name="userId" required
+                                class="w-full appearance-none rounded-2xl border border-[#2c3c63] bg-[#0b1733] px-5 py-4 pr-10 text-base md:text-lg text-slate-100 outline-none transition focus:border-green-500 focus:ring-2 focus:ring-green-400/25 hover:border-[#425887] cursor-pointer">
+                                <option value="" disabled selected>
+                                    Select your account / email
+                                </option>
+                                <option th:each="user : ${users}" th:value="${user.userId}"
+                                    th:text="${user.emailAddress}"></option>
+                            </select>
+                            <span
+                                class="pointer-events-none absolute inset-y-0 right-4 flex items-center text-slate-400">▾</span>
+                        </div>
+                    </div>
+
+                    <!-- Vehicle Selection -->
+                    <div>
+                        <label class="block text-lg md:text-xl font-semibold text-slate-100 mb-3">
+                            Vehicle
+                        </label>
+
+                        <div class="relative">
+                            <select name="vehicleId" required
+                                class="w-full appearance-none rounded-2xl border border-[#2c3c63] bg-[#0b1733] px-5 py-4 pr-10 text-base md:text-lg text-slate-100 outline-none transition focus:border-green-500 focus:ring-2 focus:ring-green-400/25 hover:border-[#425887] cursor-pointer">
+                                <option value="" disabled selected>
+                                    Select one of the vehicles
+                                </option>
+                                <option th:each="vehicle : ${vehicles}" th:value="${vehicle.vehicleId}"
+                                    th:text="${vehicle.modelType + ' - ' + vehicle.vin}">
+                                </option>
+                            </select>
+                            <span
+                                class="pointer-events-none absolute inset-y-0 right-4 flex items-center text-slate-400">▾</span>
+                        </div>
+                    </div>
+
+                    <!-- Submit + Messages -->
+                    <div class="pt-2">
+                        <div th:if="${#lists.isEmpty(vehicles)}"
+                            class="mb-4 rounded-2xl border border-red-900/40 bg-[#2a1517] px-4 py-3 text-red-100 font-medium">
+                            All vehicles are currently rented.
+                        </div>
+
+                        <div th:if="${message}" class="mb-6">
+                            <p class="text-lg font-semibold" th:text="${message}"
+                                th:classappend="${message.contains('successfully')} ? 'text-green-300' : 'text-red-300'">
+                            </p>
+                        </div>
+
+                        <button type="submit" th:disabled="${#lists.isEmpty(vehicles)}"
+                            class="bg-green-600 hover:bg-green-700 text-white text-lg font-semibold px-8 py-3 rounded-xl shadow-lg shadow-green-950/30 transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed">
+                            Rent Vehicle (MongoDB)
+                        </button>
+                    </div>
+
+                </form>
+            </div>
+
+            <div class="mt-6 flex gap-6 text-sm">
+                <a th:href="@{/}" class="text-slate-400 hover:text-slate-200 hover:underline">
+                    ← Back to Home
+                </a>
+                <a th:href="@{/student2/mongo-analytics}" class="text-slate-300 hover:text-white hover:underline">
+                    MongoDB Analytics →
+                </a>
+            </div>
+        </div>
+
+    </th:block>
+</body>
+
+</html>

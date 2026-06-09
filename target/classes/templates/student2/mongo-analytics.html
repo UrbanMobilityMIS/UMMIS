@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/main :: layout(~{::title}, ~{::main-content})}">
+
+<head>
+    <title>Student 2 Mongo Analytics</title>
+</head>
+
+<body>
+    <th:block th:fragment="main-content">
+
+        <div class="max-w-6xl mx-auto text-slate-100">
+
+            <h1 class="text-4xl md:text-5xl font-bold text-slate-100 mb-2">
+                Student 2 Mongo Analytics
+            </h1>
+
+            <p class="text-slate-400 mb-8">
+                Analytics generated from MongoDB rental documents.
+            </p>
+
+            <!-- Summary Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+
+                <div class="bg-[#101c38] rounded-2xl shadow-2xl border border-[#223055] p-6">
+                    <h3 class="text-sm text-slate-400 mb-2">Total Mongo Rentals</h3>
+                    <p class="text-3xl font-bold text-slate-100" th:text="${totalMongoRentals}"></p>
+                </div>
+
+                <div class="bg-[#101c38] rounded-2xl shadow-2xl border border-[#223055] p-6">
+                    <h3 class="text-sm text-slate-400 mb-2">Most Active User</h3>
+                    <p class="text-xl font-bold text-slate-100 break-words" th:text="${mostActiveMongoUser}"></p>
+                </div>
+
+                <div class="bg-[#101c38] rounded-2xl shadow-2xl border border-[#223055] p-6">
+                    <h3 class="text-sm text-slate-400 mb-2">Most Rented Vehicle</h3>
+                    <p class="text-xl font-bold text-slate-100 break-words" th:text="${mostRentedMongoVehicle}"></p>
+                </div>
+
+            </div>
+
+            <!-- Rental Records -->
+            <div class="bg-[#101c38] rounded-2xl shadow-2xl border border-[#223055] p-6">
+
+                <h2 class="text-2xl font-bold mb-4 text-slate-100">
+                    Mongo Rental Records
+                </h2>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full border-collapse">
+                        <thead class="bg-[#13264e]">
+                            <tr class="border-b border-[#223055]">
+                                <th class="text-left p-3 text-slate-300 text-xs uppercase tracking-wider">Rental ID</th>
+                                <th class="text-left p-3 text-slate-300 text-xs uppercase tracking-wider">User Email
+                                </th>
+                                <th class="text-left p-3 text-slate-300 text-xs uppercase tracking-wider">Vehicle</th>
+                                <th class="text-left p-3 text-slate-300 text-xs uppercase tracking-wider">Start Time
+                                </th>
+                                <th class="text-left p-3 text-slate-300 text-xs uppercase tracking-wider">Action</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr th:if="${#lists.isEmpty(mongoRentals)}">
+                                <td colspan="5" class="p-4 text-center text-slate-400">
+                                    No MongoDB records found.
+                                </td>
+                            </tr>
+
+                            <tr th:each="r : ${mongoRentals}"
+                                class="border-b border-[#223055] hover:bg-[#18315f]/50 transition-colors">
+                                <td class="p-3 text-slate-200" th:text="${r.rentalId}"></td>
+                                <td class="p-3 text-slate-200" th:text="${r.userEmail}"></td>
+                                <td class="p-3 text-slate-200" th:text="${r.vehicleModel}"></td>
+                                <td class="p-3 text-slate-200"
+                                    th:text="${#temporals.format(r.startTime, 'dd MMM yyyy HH:mm')}"></td>
+                                <td class="p-3">
+                                    <form th:if="${r.endTime == null}"
+                                        th:action="@{/student2/mongo-return-rental/{id}(id=${r.rentalId})}"
+                                        method="post">
+                                        <button type="submit"
+                                            class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg font-medium transition-colors shadow-lg shadow-green-950/20">
+                                            Return Vehicle
+                                        </button>
+                                    </form>
+
+                                    <span th:if="${r.endTime != null}" class="text-green-300 font-semibold">
+                                        Returned
+                                    </span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+
+            <div class="mt-6">
+                <a th:href="@{/}" class="text-slate-400 hover:text-slate-200 hover:underline">
+                    ← Back to Home
+                </a>
+            </div>
+
+        </div>
+
+    </th:block>
+</body>
+
+</html>

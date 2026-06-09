@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/main :: layout(~{::title}, ~{::main-content})}">
+
+<head>
+    <title>Migrate to MongoDB</title>
+</head>
+
+<body>
+    <th:block th:fragment="main-content">
+
+        <div class="max-w-3xl mx-auto text-slate-100">
+            <h1 class="text-3xl md:text-4xl font-bold text-slate-100 mb-2">
+                Migrate to MongoDB
+            </h1>
+            <p class="text-slate-400 mb-8">
+                Migrates data from MariaDB tables into MongoDB collections.
+                <code class="bg-[#101c38] px-1 rounded font-mono text-xs text-slate-200">rentals</code> collection.
+            </p>
+
+            <!-- Success message -->
+            <div th:if="${success}"
+                class="mb-6 rounded-2xl border border-green-900/40 bg-[#10261c] px-4 py-3 text-green-100">
+                <span th:text="${success}"></span>
+            </div>
+
+            <!-- Error message -->
+            <div th:if="${error}" class="mb-6 rounded-2xl border border-red-900/40 bg-[#2a1517] px-4 py-3 text-red-100">
+                <span th:text="${error}"></span>
+            </div>
+
+            <!-- Migration button -->
+            <div class="bg-[#101c38] rounded-2xl shadow-2xl p-6 border border-[#223055]">
+                <form method="post" action="/student2/migrate">
+                    <button type="submit"
+                        class="bg-primary hover:bg-primary-dark text-white px-6 py-3 rounded-xl text-base font-semibold transition-colors shadow-lg shadow-blue-950/30">
+                        Run Migration
+                    </button>
+                </form>
+
+                <p class="text-xs text-slate-400 mt-4">
+                    Source: MariaDB tables for rentals and vehicles. Target: MongoDB rental collection.
+                </p>
+            </div>
+        </div>
+
+    </th:block>
+</body>
+
+</html>

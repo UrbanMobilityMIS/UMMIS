@@ -14,18 +14,18 @@ public interface MaintenanceLogRepository extends JpaRepository<MaintenanceLog, 
     Integer nextLogNumber(@Param("vehicleId") Integer vehicleId);
 
     @Query("""
-        SELECT s.streetAddress,
-               v.vin,
-               v.modelType,
-               COUNT(m.id),
-               SUM(m.serviceCost),
-               AVG(m.serviceCost)
-        FROM MaintenanceLog m
-        JOIN m.vehicle v
-        JOIN v.station s
-        WHERE m.serviceCost > 0
-        GROUP BY s.id, s.streetAddress, v.id, v.vin, v.modelType
-        ORDER BY SUM(m.serviceCost) DESC
-    """)
+                SELECT s.streetAddress,
+                       v.vin,
+                       v.modelType,
+                       COUNT(m.id),
+                       SUM(m.serviceCost),
+                       AVG(m.serviceCost)
+                FROM MaintenanceLog m
+                JOIN m.vehicle v
+                JOIN v.station s
+                WHERE m.serviceCost > 0
+                GROUP BY s.id, s.streetAddress, v.id, v.vin, v.modelType
+                ORDER BY SUM(m.serviceCost) DESC
+            """)
     List<Object[]> maintenanceCostPerStation();
 }
