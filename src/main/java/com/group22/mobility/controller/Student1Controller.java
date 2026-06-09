@@ -57,6 +57,31 @@ public class Student1Controller {
     }
 
     // ════════════════════════════════════════════════════════
+    // MONGODB Migration (New Dedicated Section)
+    // ════════════════════════════════════════════════════════
+
+    /** Show the dedicated migration page */
+    @GetMapping("/migrate")
+    public String migrationPage(Model model) {
+        model.addAttribute("docCount", service.getMongoDocumentCount());
+        return "student1/migration";
+    }
+
+    /** Trigger migration from MariaDB → MongoDB */
+    @PostMapping("/migrate")
+    public String migrate(RedirectAttributes redirect) {
+        try {
+            int count = service.migrateToMongo();
+            redirect.addFlashAttribute("success",
+                    "Migration complete! " + count + " vehicle documents inserted into MongoDB.");
+        } catch (Exception e) {
+            redirect.addFlashAttribute("error", "Migration failed: " + e.getMessage());
+        }
+        // Redirect back to the migration page to show success message
+        return "redirect:/student1/migrate";
+    }
+
+    // ════════════════════════════════════════════════════════
     // MONGODB endpoints
     // ════════════════════════════════════════════════════════
 
@@ -65,6 +90,7 @@ public class Student1Controller {
         model.addAttribute("form", new MaintenanceLogDto());
         model.addAttribute("vehicles", service.getAllVehicles());
         model.addAttribute("technicians", service.getAllTechnicians());
+        // We keep docCount here so the UI can still warn if migration is missing
         model.addAttribute("docCount", service.getMongoDocumentCount());
         return "student1/mongo-usecase";
     }
@@ -86,7 +112,6 @@ public class Student1Controller {
                     "Log added to MongoDB document for VIN: " + doc.getVin()
                             + " (total logs: " + doc.getMaintenanceLogs().size() + ")");
         } catch (IllegalStateException e) {
-            // Migration not done yet
             redirect.addFlashAttribute("error", e.getMessage());
         } catch (Exception e) {
             redirect.addFlashAttribute("error", e.getMessage());
@@ -99,18 +124,5 @@ public class Student1Controller {
         model.addAttribute("rows", service.getMongoMaintenanceCostReport());
         model.addAttribute("docCount", service.getMongoDocumentCount());
         return "student1/mongo-analytics";
-    }
-
-    /** Trigger migration from MariaDB → MongoDB */
-    @PostMapping("/migrate")
-    public String migrate(RedirectAttributes redirect) {
-        try {
-            int count = service.migrateToMongo();
-            redirect.addFlashAttribute("success",
-                    "Migration complete! " + count + " vehicle documents inserted into MongoDB.");
-        } catch (Exception e) {
-            redirect.addFlashAttribute("error", "Migration failed: " + e.getMessage());
-        }
-        return "redirect:/student1/mongo-usecase";
     }
 }

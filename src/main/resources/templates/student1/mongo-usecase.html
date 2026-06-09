@@ -29,34 +29,19 @@
                 </p>
             </div>
 
+            <!-- Simple Warning if collection is empty -->
             <div th:if="${docCount == 0}"
-                class="mb-4 flex items-center justify-between gap-3 rounded-2xl border border-amber-900/40 bg-[#2a2313] px-4 py-3 text-sm text-amber-100">
-                <span>⚠️ MongoDB collection is empty. Migrate data from MariaDB first before submitting.</span>
-                <form th:action="@{/student1/migrate}" method="post" class="shrink-0">
-                    <button type="submit"
-                        class="rounded-xl bg-amber-500 px-3 py-1.5 text-xs font-semibold text-white transition hover:bg-amber-600">
-                        Run Migration
-                    </button>
-                </form>
+                class="mb-6 rounded-2xl border border-amber-900/40 bg-[#2a2313] px-4 py-3 text-sm text-amber-100 flex items-center justify-between">
+                <span>⚠️ MongoDB is empty. Please run the migration first.</span>
+                <a th:href="@{/student1/migrate}" class="font-bold text-amber-400 hover:underline">Migration Page →</a>
             </div>
 
-            <div th:if="${docCount > 0}"
-                class="mb-4 flex items-center justify-between gap-3 rounded-2xl border border-green-900/40 bg-[#10261c] px-4 py-3 text-sm text-green-100">
-                <span>✅ MongoDB has <strong th:text="${docCount}"></strong> vehicle documents ready.</span>
-                <form th:action="@{/student1/migrate}" method="post" class="shrink-0">
-                    <button type="submit"
-                        class="rounded-xl border border-green-700/50 px-3 py-1.5 text-xs font-semibold text-green-300 transition hover:bg-green-500/10 hover:text-green-200">
-                        Re-migrate
-                    </button>
-                </form>
-            </div>
-
+            <!-- Success/Error Messages -->
             <div th:if="${success}"
                 class="mb-4 rounded-2xl border border-green-900/40 bg-[#10261c] px-4 py-3 text-sm text-green-100">
                 ✅ <span th:text="${success}"></span>
                 — <a th:href="@{/student1/mongo-analytics}"
-                    class="font-medium text-green-300 hover:text-green-200 hover:underline">View MongoDB analytics to
-                    see the change →</a>
+                    class="font-medium text-green-300 hover:text-green-200 hover:underline">View Analytics →</a>
             </div>
 
             <div th:if="${error}"
@@ -137,8 +122,12 @@
             </div>
 
             <div class="mt-5 flex justify-between text-sm">
-                <a th:href="@{/student1/usecase}" class="text-slate-400 hover:text-slate-200 hover:underline">← MariaDB
-                    Use Case</a>
+                <div class="flex gap-4">
+                    <a th:href="@{/student1/usecase}" class="text-slate-400 hover:text-slate-200 hover:underline">←
+                        MariaDB Version</a>
+                    <a th:href="@{/student1/migrate}"
+                        class="text-slate-400 hover:text-slate-200 hover:underline">Migration Dashboard</a>
+                </div>
                 <a th:href="@{/student1/mongo-analytics}"
                     class="font-medium text-green-300 hover:text-green-200 hover:underline">View MongoDB Analytics →</a>
             </div>

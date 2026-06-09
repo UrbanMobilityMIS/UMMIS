@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/main :: layout(~{::title}, ~{::main-content})}">
+
+<head>
+    <title>MongoDB Migration – Student 1</title>
+</head>
+
+<body>
+    <th:block th:fragment="main-content">
+        <div class="max-w-3xl mx-auto py-10 text-slate-100">
+            <div class="mb-8">
+                <p class="text-sm text-slate-400 mb-1">Student 1 · Infrastructure</p>
+                <h1 class="text-3xl font-bold text-slate-100">Migrate Vehicle & Maintenance Data</h1>
+                <p class="text-slate-400 mt-2">
+                    This process extracts relational data from MariaDB and transforms it into a
+                    <strong>Denormalized Document Structure</strong> in MongoDB.
+                </p>
+            </div>
+
+            <!-- Migration Card -->
+            <div class="bg-[#101c38] rounded-3xl p-8 border border-[#223055] shadow-2xl">
+                <div class="flex items-center justify-between mb-6">
+                    <div>
+                        <h2 class="text-lg font-semibold">MongoDB Status</h2>
+                        <p class="text-sm text-slate-400" th:text="'Currently contains ' + ${docCount} + ' documents.'">
+                        </p>
+                    </div>
+                    <div th:if="${docCount > 0}"
+                        class="px-3 py-1 rounded-full bg-green-500/10 text-green-400 text-xs font-bold border border-green-500/20">
+                        READY
+                    </div>
+                    <div th:if="${docCount == 0}"
+                        class="px-3 py-1 rounded-full bg-amber-500/10 text-amber-400 text-xs font-bold border border-amber-500/20">
+                        EMPTY
+                    </div>
+                </div>
+
+                <div th:if="${success}"
+                    class="mb-6 p-4 bg-green-500/10 border border-green-500/20 text-green-100 rounded-xl text-sm">
+                    ✅ <span th:text="${success}"></span>— <a th:href="@{/student1/mongo-analytics}"
+                        class="font-medium text-green-300 hover:text-green-200 hover:underline">View
+                        MongoDB analytics to
+                        see the change →</a>
+                </div>
+
+                <form th:action="@{/student1/migrate}" method="post">
+                    <button type="submit"
+                        class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-4 rounded-2xl transition-all shadow-lg shadow-green-900/20">
+                        Run ETL Migration Process
+                    </button>
+                </form>
+
+                <div class="mt-6 space-y-3">
+                    <h3 class="text-xs font-bold uppercase tracking-widest text-slate-500">Migration Steps:</h3>
+                    <ul class="text-xs text-slate-400 space-y-2">
+                        <li class="flex gap-2"><span>1.</span> <span>Wipe existing <code>vehicle_maintenance</code>
+                                collection in MongoDB.</span></li>
+                        <li class="flex gap-2"><span>2.</span> <span>Perform SQL JOIN on MariaDB (Vehicle + Station +
+                                MaintenanceLog).</span></li>
+                        <li class="flex gap-2"><span>3.</span> <span>Map flat SQL rows into Nested Java Objects
+                                (Denormalization).</span></li>
+                        <li class="flex gap-2"><span>4.</span> <span>Perform Bulk Insert into MongoDB.</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="mt-8 text-center">
+                <a th:href="@{/student1/mongo-usecase}" class="text-green-400 hover:underline text-sm font-medium">
+                    Go to MongoDB Use Case →
+                </a>
+            </div>
+        </div>
+    </th:block>
+</body>
+
+</html>
